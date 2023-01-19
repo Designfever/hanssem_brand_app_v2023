@@ -84,6 +84,7 @@ const App: React.FC = () => {
           overflow: 'hidden'
         }}
         onMouseDown={setStopAll}
+        onTouchStart={setStopAll}
       >
         <Slider columnSize={1}>
           {videos.map((videoUrl, index) => {
