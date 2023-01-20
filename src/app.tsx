@@ -15,16 +15,37 @@ const CssNoSelect = css`
 const S = {
   Li: styled.li({
     position: 'relative',
-    aspectRatio: '16/8.5',
+    aspectRatio: '16/8',
     width: '100%',
     top: '0'
+  }),
+  Background: styled.div({
+    position: 'relative',
+    pointerEvents: 'none',
+    width: '100%',
+    height: '100%',
+    left: '0',
+    top: '0',
+    img: {
+      width: '100%',
+      height: 'auto'
+    }
   })
 };
 
 const videos = [
-  'https://play.wecandeo.com/video/v/?key=BOKNS9AQWrG4BEgc1gbbKHForJPIJM9qNii5JRaEnzhqbvftKUJCTbgieie',
-  'https://play.wecandeo.com/video/v/?key=BOKNS9AQWrG4BEgc1gbbKHForJPIJM9qNii5JRaEnzhoiiSGMck7FfCAieie',
-  'https://play.wecandeo.com/video/v/?key=BOKNS9AQWrG4BEgc1gbbKHForJPIJM9qNii5JRaEnzhrL4LVDiiRMPaAieie'
+  {
+    src: 'https://play.wecandeo.com/video/v/?key=BOKNS9AQWrG4BEgc1gbbKHForJPIJM9qNii5JRaEnzhqbvftKUJCTbgieie',
+    thumbnail: '/thumbnail-1.png'
+  },
+  {
+    src: 'https://play.wecandeo.com/video/v/?key=BOKNS9AQWrG4BEgc1gbbKHForJPIJM9qNii5JRaEnzhoiiSGMck7FfCAieie',
+    thumbnail: '/thumbnail-2.png'
+  },
+  {
+    src: 'https://play.wecandeo.com/video/v/?key=BOKNS9AQWrG4BEgc1gbbKHForJPIJM9qNii5JRaEnzhrL4LVDiiRMPaAieie',
+    thumbnail: '/thumbnail-3.png'
+  }
 ];
 const App: React.FC = () => {
   const refIframeEl = useRef<Array<HTMLIFrameElement>>([]);
@@ -87,14 +108,14 @@ const App: React.FC = () => {
         onTouchStart={setStopAll}
       >
         <Slider columnSize={1}>
-          {videos.map((videoUrl, index) => {
+          {videos.map((video, index) => {
             return (
               <S.Li css={CssNoSelect} key={index}>
                 <div css={{ width: '90%', height: '100%', margin: '0 auto' }}>
                   <iframe
                     width='100%'
                     height='100%'
-                    src={`${videoUrl}`}
+                    src={`${video.src}`}
                     frameBorder='0'
                     allowFullScreen
                     allow='autoplay;fullscreen;'
@@ -106,25 +127,33 @@ const App: React.FC = () => {
                 <div
                   css={{
                     position: 'absolute',
-                    width: '100%',
+                    width: '90%',
+                    left: '5%',
                     height: '100%',
-                    left: '0',
                     top: '0'
                   }}
                 >
                   <div
-                    css={{
-                      position: 'absolute',
-                      left: '50%',
-                      top: '50%',
-                      transform: 'translate(-50%, -50%)'
-                    }}
-                    onClick={() => setPlay(index)}
                     ref={(el) => {
                       if (el) refPlayEl.current[index] = el;
                     }}
                   >
-                    <img src={'/play.png'} alt={'play'} width={'100px'} />
+                    <S.Background>
+                      <img src={video.thumbnail} alt={''} />
+                    </S.Background>
+                    <div
+                      css={{
+                        position: 'absolute',
+                        cursor: 'pointer',
+                        left: '50%',
+                        top: '50%',
+                        transform: 'translate(-50%, -50%)',
+                        width: '18.5%'
+                      }}
+                      onClick={() => setPlay(index)}
+                    >
+                      <img src={'/btn-play.png'} alt={'play'} width={'100%'} />
+                    </div>
                   </div>
                 </div>
               </S.Li>
