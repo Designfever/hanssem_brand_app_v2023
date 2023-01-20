@@ -74,7 +74,7 @@ const App: React.FC = () => {
     refIframeEl.current.map((el) => {
       // @ts-ignore
       const api = new smIframeAPI(el.contentWindow);
-      api.stop();
+      api.pause();
     });
 
     refPlayEl.current.map((el) => {
